@@ -3,6 +3,7 @@ package com.kcj.domain;
 import javax.persistence.*;
 import java.util.Set;
 @Entity
+@Table(name="poll")
 public class Poll {
 
     @Id

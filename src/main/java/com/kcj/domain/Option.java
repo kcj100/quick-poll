@@ -1,11 +1,9 @@
 package com.kcj.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="poll_option")
 public class Option {
     @Id
     @GeneratedValue

@@ -3,6 +3,7 @@ package com.kcj.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name="vote")
 public class Vote {
 
     @Id
