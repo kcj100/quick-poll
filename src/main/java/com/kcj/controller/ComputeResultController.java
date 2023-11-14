@@ -41,6 +41,8 @@ public class ComputeResultController {
 
 
         }
+        voteResult.setTotalVotes(totalVotes);
+        voteResult.setResults(tempMap.values());
         return new ResponseEntity<VoteResult>(voteResult, HttpStatus.OK);
     }
 

@@ -33,13 +33,25 @@ public class PollService {
 
     public Poll editPoll(Poll poll, Long pollId) {
         Poll existingPoll = pollRepository.findById(pollId).orElse(null);
-        if (existingPoll != null) {
-            existingPoll.setQuestion(poll.getQuestion());
 
+        if (existingPoll != null) {
+            existingPoll.setQuestion(poll.getQuestion()); // Update other fields as needed
+
+            // Synchronize the options
             Map<Long, Option> existingOptionsMap = existingPoll.getOptions().stream()
                     .collect(Collectors.toMap(Option::getId, opt -> opt));
+
+            Set<Option> newOptions = poll.getOptions();
+
+            for (Option newOption : newOptions) {
+                Option matchingExistingOption = existingOptionsMap.get(newOption.getId());
+
+                if (matchingExistingOption != null) {
+                    matchingExistingOption.setValue(newOption.getValue()); // Update other option fields as needed
+                }
+            }
         }
-        return pollRepository.save(poll);
+            return pollRepository.save(existingPoll);
     }
 
     public void deletePoll(Long pollId) {
