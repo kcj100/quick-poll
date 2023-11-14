@@ -61,8 +61,7 @@ public class PollController {
     @PutMapping("/polls/{pollId}")
     public ResponseEntity<?> updatePoll(@RequestBody Poll poll, @PathVariable Long pollId) {
         verifyPoll(pollId);
-        pollService.updatePoll(poll);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(pollService.editPoll(poll, pollId), HttpStatus.OK);
     }
 
     @DeleteMapping("/polls/{pollId}")

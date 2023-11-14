@@ -1,11 +1,13 @@
 package com.kcj.service;
 
+import com.kcj.domain.Option;
 import com.kcj.domain.Poll;
 import com.kcj.repository.PollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PollService {
@@ -29,7 +31,14 @@ public class PollService {
         return pollRepository.findById(pollId);
     }
 
-    public Poll updatePoll(Poll poll) {
+    public Poll editPoll(Poll poll, Long pollId) {
+        Poll existingPoll = pollRepository.findById(pollId).orElse(null);
+        if (existingPoll != null) {
+            existingPoll.setQuestion(poll.getQuestion());
+
+            Map<Long, Option> existingOptionsMap = existingPoll.getOptions().stream()
+                    .collect(Collectors.toMap(Option::getId, opt -> opt));
+        }
         return pollRepository.save(poll);
     }
 
